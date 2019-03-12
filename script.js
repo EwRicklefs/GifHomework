@@ -33,6 +33,8 @@ $(document).ready(function() {
             //empty the gif box of any gifs that are already there
             $('#gifBox').empty();
         
+            //TODO: Write this so that it dynamically creates a new boostrap row every other element
+                //this will display the gifs side by side.
             for(var i = 0; i<response.data.length; i++) {   
                 //Creates a new card for each gif and displays them on the page. 
                 var gifHead = $('<div>')
