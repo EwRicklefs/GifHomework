@@ -22,7 +22,7 @@ $(document).ready(function() {
         $('#buttons').append(newButton)
     })
 
-    $("button").on("click", function() {
+    $(document.body).on("click","button", function() {
         //Creates a giphy API call based off button pressed
         var callUrl = "https://api.giphy.com/v1/gifs/search?api_key=rLCmewZGFqjx3RGUFJwTcyeHco1wzQp2&q="+ $(this).data('item') + "&limit=10&offset=0&rating=G&lang=en"
         console.log(callUrl)
@@ -58,7 +58,7 @@ $(document).ready(function() {
         });
     })
 
-    $("img").on("click", function() {
+    $(document.body).on("click","img", function() {
         console.log('working')
         var state = $(this).data('state');
         var state=$(this).attr("data-state")
