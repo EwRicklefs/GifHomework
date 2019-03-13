@@ -2,3 +2,27 @@ button {
     margin-right:2rem;
 }
 
+#buttonParent {
+    margin-top:20px;
+    background-color:beige;
+    padding:10px;
+}
+
+body {
+    background-image: url("crossline-lines.png");
+   }
+
+#buttonGen {
+    background-color:beige;
+    padding:10px;
+}
+
+#gifBox {
+    background-color:beige;
+    padding:10px;
+}
+
+#newButtonName {
+    width:134px;
+    margin-bottom:10px;
+}

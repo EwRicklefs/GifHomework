@@ -14,35 +14,40 @@ $.each(topics, function () {
 $(document).ready(function() {
     var giphyURL = "https://api.giphy.com/v1/gifs/search?api_key=rLCmewZGFqjx3RGUFJwTcyeHco1wzQp2&q=chair&limit=10&offset=0&rating=G&lang=en"
 
+    //wont generate a new button if val is empty
     $('#buttonSubmit').on("click", function() {
-        var newButton = $('<button>')
-        var newButtonVal = $('#newButtonName').val()
-        newButton.text(newButtonVal)
-        newButton.attr('data-item', newButtonVal)
-        $('#buttons').append(newButton)
+        if ($('#newButtonName').val()) {
+            var newButton = $('<button>')
+            var newButtonVal = $('#newButtonName').val()
+            newButton.text(newButtonVal)
+            newButton.attr('data-item', newButtonVal)
+            $('#buttons').append(newButton)
+            $('#newButtonName').val('')
+        }
     })
 
     $(document.body).on("click","button", function() {
         //Creates a giphy API call based off button pressed
         var callUrl = "https://api.giphy.com/v1/gifs/search?api_key=rLCmewZGFqjx3RGUFJwTcyeHco1wzQp2&q="+ $(this).data('item') + "&limit=10&offset=0&rating=G&lang=en"
-        console.log(callUrl)
         $.ajax({
             url: callUrl,
             method: "GET"
         }).then(function(response) {
             //empty the gif box of any gifs that are already there
             $('#gifBox').empty();
-        
-            //TODO: Write this so that it dynamically creates a new boostrap row every other element
-                //this will display the gifs side by side.
+    
             for(var i = 0; i<response.data.length; i++) {   
                 //Creates a new card for each gif and displays them on the page. 
+                if (i%2===0) {
+                    var newDiv = $('<div class=row>')
+                }
+
                 var gifHead = $('<div>')
-                gifHead.attr('class', 'card w-75')
+                gifHead.attr('class', 'card w-50')
                 var gifCardBody = $('<div>')
                 gifCardBody.attr('class', "card-body")
                 var gifImg = $('<img>')
-                gifImg.attr('class', 'gif mx-auto mt-3')
+                gifImg.attr('class', 'gif mx-auto mt-3 ml-10')
                 gifImg.attr('src', response.data[i].images.fixed_height_still.url)
                 gifImg.css("width", response.data[i].images.fixed_height_still.width)
                 gifImg.attr('data-still', response.data[i].images.fixed_height_still.url)
@@ -54,8 +59,11 @@ $(document).ready(function() {
                 $('#gifBox').append(gifHead)
 
                 var gifRating = $('<p>')
-                gifRating.text("Rating: " + response.data[i].rating)
+                gifRating.text("Rating: " + response.data[i].rating +  " -------  Score: " + response.data[i]._score)
+                var metaData=$('<p>')
+                metaData.text("Title: " + response.data[i].title)
                 gifCardBody.append(gifRating)
+                gifCardBody.append(metaData)
             }        
         });
     })
